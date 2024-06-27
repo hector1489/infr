@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evaluación de Infraestructura</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f8f9fa;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 100%;
+      width: 600px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .pregunta {
+      display: none;
+    }
+
+    .pregunta.active {
+      display: block;
+    }
+
+    .btn-block {
+      display: block;
+      width: 100%;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div id="module-infraestructura" class="module-section active">
+      <h3 class="text-center">Evaluación de Infraestructura</h3>
+      <form id="form-infraestructura">
+        <div class="form-group pregunta active">
+          <label for="separaciones">Separaciones de áreas mínimas y condiciones de mantención de esta:</label>
+          <select class="form-control" id="separaciones" name="separaciones"
+            onchange="calculateAverage('infraestructura')">
+            <option value="100">100%: Áreas separadas virtualmente y en buen estado</option>
+            <option value="75">75%: Se cuenta con áreas separadas frías y calientes</option>
+            <option value="50">50%: Separación pero mantención deficientes</option>
+            <option value="25">25%: Con deficiencias de infraestructura (T° ambiental)</option>
+            <option value="0">0%: Sin separación, con mantención deficientes</option>
+          </select>
+        </div>
+
+        <div class="form-group pregunta">
+          <label for="equipos">Equipos mínimos de cocción y frío (quemadores, refrigeradores, mantenedores,
+            otros):</label>
+          <select class="form-control" id="equipos" name="equipos" onchange="calculateAverage('infraestructura')">
+            <option value="100">100%: Equipamiento suficiente</option>
+            <option value="75">75%: Equipamiento suficiente salvo una preparación no crítica</option>
+            <option value="50">50%: Equipamiento deficiente dependiendo del menú</option>
+            <option value="25">25%: Adelantan preparación para cumplir con servicio planificado</option>
+            <option value="0">0%: El equipamiento es insuficiente para la operación</option>
+          </select>
+        </div>
+
+        <div class="form-group pregunta">
+          <label for="servicios">Cuenta con servicios básicos (agua potable, desagües, ventilación, luminarias,
+            vestuarios, otros):</label>
+          <select class="form-control" id="servicios" name="servicios" onchange="calculateAverage('infraestructura')">
+            <option value="100">100%: Cuenta con todos los servicios básicos</option>
+            <option value="75">75%: Cuenta con servicios básicos con detalles en iluminación</option>
+            <option value="50">50%: Fallan en el vestuario y/o la iluminación</option>
+            <option value="25">25%: Existen fallas en la ventilación y desagües</option>
+            <option value="0">0%: Sin agua potable y/o alcantarillado adecuados</option>
+          </select>
+        </div>
+      </form>
+
+      <h3 class="text-center">PROMEDIO: <span id="average-infraestructura">100%</span></h3>
+      <button class="btn btn-secondary btn-block" onclick="previousQuestion()">Anterior</button>
+      <button class="btn btn-primary btn-block" onclick="nextQuestion()">Siguiente</button>
+    </div>
+  </div>
+
+  <script>
+    let currentQuestion = 0;
+    const questions = document.querySelectorAll('.pregunta');
+
+    function showQuestion(index) {
+      questions.forEach((question, i) => {
+        question.style.display = i === index ? 'block' : 'none';
+      });
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < questions.length - 1) {
+        currentQuestion++;
+        showQuestion(currentQuestion);
+      }
+    }
+
+    function previousQuestion() {
+      if (currentQuestion > 0) {
+        currentQuestion--;
+        showQuestion(currentQuestion);
+      }
+    }
+
+    // Mostrar la primera pregunta al cargar la página
+    showQuestion(currentQuestion);
+  </script>
+</body>
+
+</html>
